@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.ShowsPage.header',
-    defaultMessage: 'This is ShowsPage container !',
+    defaultMessage: 'Search TV Shows',
   },
 });

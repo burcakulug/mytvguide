@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Formik, Form, Field } from 'formik';
+import { TextField, RaisedButton } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -18,6 +20,7 @@ import makeSelectShowsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { searchShows } from './actions';
 
 export class ShowsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -27,14 +30,42 @@ export class ShowsPage extends React.PureComponent { // eslint-disable-line reac
           <title>ShowsPage</title>
           <meta name="description" content="Description of ShowsPage" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
+        <h2><FormattedMessage {...messages.header} /></h2>
+        <Formik
+          onSubmit={(values, actions) => {
+            console.log(values);
+            this.props.searchShows(values.q);
+            actions.setSubmitting(false);
+          }
+          }
+          render={() => (
+            <Form>
+              <div>
+                <Field
+                  name="q"
+                  render={({ field: { name }, form: { handleChange, setFieldTouched } }) => (
+                    <TextField
+                      name={name}
+                      hintText="Enter show name"
+                      onChange={(event) => {
+                        handleChange(event);
+                        setFieldTouched(name);
+                      }}
+                    />
+                  )}
+                />
+                <RaisedButton style={{ marginLeft: '20px' }} type="submit" label="Search" />
+              </div>
+            </Form>
+          )}
+        />
       </div>
     );
   }
 }
 
 ShowsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  searchShows: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -43,7 +74,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    searchShows: (q) => dispatch(searchShows(q)),
   };
 }
 

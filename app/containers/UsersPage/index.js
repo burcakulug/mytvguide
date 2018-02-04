@@ -36,7 +36,7 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
         <Formik
           onSubmit={(values, actions) => {
             this.props.createUser(values.name);
-            actions.setSubmitted(true);
+            actions.setSubmitting(false);
           }
           }
           render={() => (
