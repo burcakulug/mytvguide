@@ -44,12 +44,14 @@ export default function App() {
             <MenuItem primaryText="Shows" containerElement={<Link to="/shows" />} />
           </IconMenu>}
       />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/users" component={UsersPage} />
-        <Route exact path="/shows" component={ShowsPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <div style={{ margin: '20px' }}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/users" component={UsersPage} />
+          <Route exact path="/shows" component={ShowsPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
     </div>
   );
 }
