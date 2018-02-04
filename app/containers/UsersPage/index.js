@@ -1,8 +1,8 @@
 /**
- *
- * UsersPage
- *
- */
+*
+* UsersPage
+*
+*/
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -13,13 +13,16 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Formik, Form, Field } from 'formik';
 import { TextField, RaisedButton } from 'material-ui';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectUsersPage from './selectors';
+import { makeSelectUsers, makeSelectSelectedUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { createUser, selectUser } from './actions';
 
 export class UsersPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -31,12 +34,16 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
         </Helmet>
         <h2><FormattedMessage {...messages.header} /></h2>
         <Formik
-          onSubmit={(values, actions) => console.log(values, actions)}
+          onSubmit={(values, actions) => {
+            this.props.createUser(values.name);
+            actions.setSubmitted(true);
+          }
+          }
           render={() => (
             <Form>
               <div>
                 <Field
-                  name="q"
+                  name="name"
                   render={({ field: { name }, form: { handleChange, setFieldTouched } }) => (
                     <TextField
                       name={name}
@@ -48,34 +55,46 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
                     />
                   )}
                 />
-                <RaisedButton style={{ marginLeft: '20px' }} type="submit" label="Add" />
+                <RaisedButton style={{ marginLeft: '20px' }} type="submit" label="Create" />
               </div>
             </Form>
           )}
         />
+        <div>
+          <List>
+            <Subheader>Current Users</Subheader>
+            {this.props.users.map(({ name }) => (
+              <ListItem key={name} primaryText={`${name} - ${this.props.selectedUser === name}`} onClick={() => this.props.selectUser(name)} />))}
+          </List>
+        </div>
       </div>
     );
   }
 }
 
 UsersPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  createUser: PropTypes.func.isRequired,
+  selectUser: PropTypes.func.isRequired,
+  selectedUser: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.string),
 };
 
 const mapStateToProps = createStructuredSelector({
-  userspage: makeSelectUsersPage(),
+  users: makeSelectUsers(),
+  selectedUser: makeSelectSelectedUser(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    createUser: (name) => dispatch(createUser(name)),
+    selectUser: (name) => dispatch(selectUser(name)),
   };
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'usersPage', reducer });
-const withSaga = injectSaga({ key: 'usersPage', saga });
+const withReducer = injectReducer({ key: 'users', reducer });
+const withSaga = injectSaga({ key: 'users', saga });
 
 export default compose(
   withReducer,

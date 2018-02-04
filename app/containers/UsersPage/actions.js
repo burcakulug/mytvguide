@@ -5,11 +5,20 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  CREATE_USER,
+  SELECT_USER,
 } from './constants';
 
-export function defaultAction() {
+export function createUser(name) {
   return {
-    type: DEFAULT_ACTION,
+    type: CREATE_USER,
+    name,
+  };
+}
+
+export function selectUser(name) {
+  return {
+    type: SELECT_USER,
+    name,
   };
 }

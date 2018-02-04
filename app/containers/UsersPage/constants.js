@@ -4,4 +4,5 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/UsersPage/DEFAULT_ACTION';
+export const CREATE_USER = 'app/UsersPage/CREATE_USER';
+export const SELECT_USER = 'app/UsersPage/SELECT_USER';
