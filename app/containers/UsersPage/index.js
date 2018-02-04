@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Formik, Form, Field } from 'formik';
+import { TextField, RaisedButton } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -27,7 +29,30 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
           <title>UsersPage</title>
           <meta name="description" content="Description of UsersPage" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
+        <h2><FormattedMessage {...messages.header} /></h2>
+        <Formik
+          onSubmit={(values, actions) => console.log(values, actions)}
+          render={() => (
+            <Form>
+              <div>
+                <Field
+                  name="q"
+                  render={({ field: { name }, form: { handleChange, setFieldTouched } }) => (
+                    <TextField
+                      name={name}
+                      hintText="Enter user's name"
+                      onChange={(event) => {
+                        handleChange(event);
+                        setFieldTouched(name);
+                      }}
+                    />
+                  )}
+                />
+                <RaisedButton style={{ marginLeft: '20px' }} type="submit" label="Add" />
+              </div>
+            </Form>
+          )}
+        />
       </div>
     );
   }
