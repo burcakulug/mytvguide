@@ -12,7 +12,12 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -21,6 +26,22 @@ import './styles.css';
 export default function App() {
   return (
     <div>
+      <AppBar
+        title={<span>My TV Guide</span>}
+        showMenuIconButton={false}
+        iconElementRight={
+          <IconMenu
+            iconButtonElement={
+              <IconButton><MoreVertIcon /></IconButton>
+            }
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          >
+            <MenuItem primaryText="Home" containerElement={<Link to="/" />} />
+            <MenuItem primaryText="Users" containerElement={<Link to="/users" />} />
+            <MenuItem primaryText="Shows" containerElement={<Link to="/shows" />} />
+          </IconMenu>}
+      />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route component={NotFoundPage} />
