@@ -27,7 +27,7 @@ export class Seasons extends React.PureComponent { // eslint-disable-line react/
   render() {
     return (
       <SeasonsContainer>
-        <FormattedMessage {...messages.header} />
+        <h2><FormattedMessage {...messages.header} /></h2>
       </SeasonsContainer>
     );
   }

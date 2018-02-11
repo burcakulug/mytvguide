@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.Seasons.header',
-    defaultMessage: 'This is Seasons container !',
+    defaultMessage: 'Seasons',
   },
 });
