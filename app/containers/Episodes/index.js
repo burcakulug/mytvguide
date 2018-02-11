@@ -27,7 +27,7 @@ export class Episodes extends React.PureComponent { // eslint-disable-line react
   render() {
     return (
       <EpisodesContainer>
-        <FormattedMessage {...messages.header} />
+        <h2><FormattedMessage {...messages.header} /></h2>
       </EpisodesContainer>
     );
   }
