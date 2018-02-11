@@ -45,8 +45,10 @@ export class Shows extends React.PureComponent { // eslint-disable-line react/pr
 
 Shows.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  list: PropTypes.arrayOf(PropTypes.number),
-  details: PropTypes.arrayOf(PropTypes.object),
+  shows: PropTypes.shape({
+    list: PropTypes.arrayOf(PropTypes.number),
+    details: PropTypes.arrayOf(PropTypes.object),
+  }),
 };
 
 const mapStateToProps = createStructuredSelector({
