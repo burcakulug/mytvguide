@@ -6,15 +6,21 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  ADD_SHOW,
+  UPDATE_DETAILS_SUCCESS,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  list: [],
+  details: [],
+});
 
 function showsReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case ADD_SHOW:
+      return state.update('list', (list) => list.push(action.id));
+    case UPDATE_DETAILS_SUCCESS:
+      return state.set('details', fromJS(action.details));
     default:
       return state;
   }

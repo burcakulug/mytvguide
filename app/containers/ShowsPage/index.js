@@ -21,6 +21,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { searchShows } from './actions';
+import { addShow } from '../Shows/actions';
 
 export class ShowsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -64,7 +65,7 @@ export class ShowsPage extends React.PureComponent { // eslint-disable-line reac
           {searchResult &&
             (<List>
               {searchResult.map((item) => (
-                <ListItem key={item.show.id}>
+                <ListItem key={item.show.id} onClick={() => this.props.addShow(item.show.id)}>
                   {`${item.show.name} (${(item.show.network && item.show.network.name) || 'N/A'})`}
                 </ListItem>
               ))}
@@ -78,6 +79,7 @@ export class ShowsPage extends React.PureComponent { // eslint-disable-line reac
 
 ShowsPage.propTypes = {
   searchShows: PropTypes.func.isRequired,
+  addShow: PropTypes.func.isRequired,
   showsPage: PropTypes.object,
 };
 
@@ -88,6 +90,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     searchShows: (q) => dispatch(searchShows(q)),
+    addShow: (id) => dispatch(addShow(id)),
   };
 }
 

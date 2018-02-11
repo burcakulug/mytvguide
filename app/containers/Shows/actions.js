@@ -5,11 +5,20 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  ADD_SHOW,
+  UPDATE_DETAILS_SUCCESS
 } from './constants';
 
-export function defaultAction() {
+export function addShow(id) {
   return {
-    type: DEFAULT_ACTION,
+    type: ADD_SHOW,
+    id,
+  };
+}
+
+export function updateDetailsSuccess(details) {
+  return {
+    type: UPDATE_DETAILS_SUCCESS,
+    details,
   };
 }

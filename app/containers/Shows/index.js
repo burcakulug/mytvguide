@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { List, ListItem } from 'material-ui';
+import find from 'lodash/find';
+import get from 'lodash/get';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -25,9 +28,16 @@ const ShowsContainer = styled.div`
 
 export class Shows extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { list, details } = this.props.shows;
     return (
       <ShowsContainer>
-        <FormattedMessage {...messages.header} />
+        <h2><FormattedMessage {...messages.header} /></h2>
+        <List>
+          {list && list.map((id) => (
+            <ListItem key={id}>{id} - {get(find(details, { id }), 'name')}</ListItem>
+          ))}
+        </List>
+
       </ShowsContainer>
     );
   }
@@ -35,6 +45,8 @@ export class Shows extends React.PureComponent { // eslint-disable-line react/pr
 
 Shows.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  list: PropTypes.arrayOf(PropTypes.number),
+  details: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = createStructuredSelector({
