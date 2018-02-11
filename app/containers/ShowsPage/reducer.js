@@ -19,7 +19,7 @@ function showsPageReducer(state = initialState, action) {
     case SEARCH_SHOWS:
       return state;
     case SEARCH_SHOWS_SUCCESS:
-      return state.set('searchResult', action.searchResult);
+      return state.set('searchResult', fromJS(action.searchResult));
     default:
       return state;
   }

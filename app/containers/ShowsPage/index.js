@@ -12,7 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Formik, Form, Field } from 'formik';
-import { TextField, RaisedButton } from 'material-ui';
+import { TextField, RaisedButton, List, ListItem } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -24,6 +24,7 @@ import { searchShows } from './actions';
 
 export class ShowsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { searchResult } = this.props.showsPage;
     return (
       <div>
         <Helmet>
@@ -59,6 +60,17 @@ export class ShowsPage extends React.PureComponent { // eslint-disable-line reac
             </Form>
           )}
         />
+        <div>
+          {searchResult &&
+            (<List>
+              {searchResult.map((item) => (
+                <ListItem key={item.show.id}>
+                  {`${item.show.name} (${(item.show.network && item.show.network.name) || 'N/A'})`}
+                </ListItem>
+              ))}
+            </List>)
+          }
+        </div>
       </div>
     );
   }
@@ -66,10 +78,11 @@ export class ShowsPage extends React.PureComponent { // eslint-disable-line reac
 
 ShowsPage.propTypes = {
   searchShows: PropTypes.func.isRequired,
+  showsPage: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  showspage: makeSelectShowsPage(),
+  showsPage: makeSelectShowsPage(),
 });
 
 function mapDispatchToProps(dispatch) {
