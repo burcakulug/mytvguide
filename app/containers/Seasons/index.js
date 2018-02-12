@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { List, ListItem, Subheader } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -25,9 +26,16 @@ const SeasonsContainer = styled.div`
 
 export class Seasons extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { details, showName } = this.props.seasons;
     return (
       <SeasonsContainer>
         <h2><FormattedMessage {...messages.header} /></h2>
+        <List>
+          {details && details.length > 0 && <Subheader>{showName} Seasons</Subheader>}
+          {details && details.sort((a, b) => a.number - b.number).map((season) => (
+            <ListItem key={season.number}>Season {season.number}</ListItem>
+          ))}
+        </List>
       </SeasonsContainer>
     );
   }
@@ -35,6 +43,11 @@ export class Seasons extends React.PureComponent { // eslint-disable-line react/
 
 Seasons.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  seasons: PropTypes.shape({
+    showId: PropTypes.number,
+    showName: PropTypes.string,
+    details: PropTypes.arrayOf(PropTypes.object),
+  }),
 };
 
 const mapStateToProps = createStructuredSelector({

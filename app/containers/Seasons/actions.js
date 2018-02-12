@@ -5,11 +5,21 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  GET_SEASONS,
+  GET_SEASONS_SUCCESS,
 } from './constants';
 
-export function defaultAction() {
+export function getSeasons(showId, showName) {
   return {
-    type: DEFAULT_ACTION,
+    type: GET_SEASONS,
+    showId,
+    showName,
+  };
+}
+
+export function getSeasonsSuccess(details) {
+  return {
+    type: GET_SEASONS_SUCCESS,
+    details,
   };
 }

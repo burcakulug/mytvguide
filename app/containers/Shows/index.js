@@ -21,6 +21,7 @@ import makeSelectShows from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { getSeasons } from '../Seasons/actions';
 
 const ShowsContainer = styled.div`
   grid-area: shows;
@@ -33,9 +34,14 @@ export class Shows extends React.PureComponent { // eslint-disable-line react/pr
       <ShowsContainer>
         <h2><FormattedMessage {...messages.header} /></h2>
         <List>
-          {list && list.map((id) => (
-            <ListItem key={id}>{id} - {get(find(details, { id }), 'name')}</ListItem>
-          ))}
+          {list && list.map((id) => {
+            const name = get(find(details, { id }), 'name');
+            return (
+              <ListItem key={id} onClick={() => this.props.getSeasons(id, name)}>
+                {id} - {name}
+              </ListItem>
+            );
+          })}
         </List>
 
       </ShowsContainer>
@@ -44,7 +50,7 @@ export class Shows extends React.PureComponent { // eslint-disable-line react/pr
 }
 
 Shows.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  getSeasons: PropTypes.func.isRequired,
   shows: PropTypes.shape({
     list: PropTypes.arrayOf(PropTypes.number),
     details: PropTypes.arrayOf(PropTypes.object),
@@ -57,7 +63,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getSeasons: (showId, showName) => dispatch(getSeasons(showId, showName)),
   };
 }
 
