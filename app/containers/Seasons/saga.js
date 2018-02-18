@@ -1,12 +1,15 @@
-import { take, call, put, select, takeLatest, all } from 'redux-saga/effects';
+import { put, select, takeLatest, all } from 'redux-saga/effects';
+import find from 'lodash/find';
 
-import request from '../../utils/request';
 import { GET_SEASONS } from './constants';
 import { getSeasonsSuccess } from './actions';
+import makeSelectShows from '../Shows/selectors';
 
 export function* getSeasonsSaga({ showId }) {
-  const details = yield call(request, `http://api.tvmaze.com/shows/${showId}/seasons`);
-  yield put((getSeasonsSuccess(details)));
+  const { showData } = yield select(makeSelectShows());
+  console.log('showData', showData);
+  const show = find(showData, { show: { id: showId } });
+  yield put((getSeasonsSuccess(show.show.name, show.seasons)));
 }
 
 export function* watchGetSeasonsSaga() {

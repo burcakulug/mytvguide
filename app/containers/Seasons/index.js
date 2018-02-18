@@ -26,13 +26,13 @@ const SeasonsContainer = styled.div`
 
 export class Seasons extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { details, showName } = this.props.seasons;
+    const { seasons, showName } = this.props.seasons;
     return (
       <SeasonsContainer>
         <h2><FormattedMessage {...messages.header} /></h2>
         <List>
-          {details && details.length > 0 && <Subheader>{showName} Seasons</Subheader>}
-          {details && details.sort((a, b) => a.number - b.number).map((season) => (
+          {seasons && seasons.length > 0 && <Subheader>{showName} Seasons</Subheader>}
+          {seasons && seasons.sort((a, b) => a.number - b.number).map(({ season }) => (
             <ListItem key={season.number}>Season {season.number}</ListItem>
           ))}
         </List>
@@ -46,7 +46,7 @@ Seasons.propTypes = {
   seasons: PropTypes.shape({
     showId: PropTypes.number,
     showName: PropTypes.string,
-    details: PropTypes.arrayOf(PropTypes.object),
+    seasons: PropTypes.arrayOf(PropTypes.object),
   }),
 };
 

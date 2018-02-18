@@ -17,9 +17,10 @@ export function getSeasons(showId, showName) {
   };
 }
 
-export function getSeasonsSuccess(details) {
+export function getSeasonsSuccess(showName, seasons) {
   return {
     type: GET_SEASONS_SUCCESS,
-    details,
+    showName,
+    seasons,
   };
 }

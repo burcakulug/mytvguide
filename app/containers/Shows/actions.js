@@ -6,7 +6,8 @@
 
 import {
   ADD_SHOW,
-  UPDATE_DETAILS_SUCCESS
+  UPDATE_SHOW_DATA_SUCCESS,
+  UPDATE_SEASON_DATA_SUCCESS,
 } from './constants';
 
 export function addShow(id) {
@@ -16,9 +17,16 @@ export function addShow(id) {
   };
 }
 
-export function updateDetailsSuccess(details) {
+export function updateShowDataSuccess(showData) {
   return {
-    type: UPDATE_DETAILS_SUCCESS,
-    details,
+    type: UPDATE_SHOW_DATA_SUCCESS,
+    showData,
+  };
+}
+
+export function updateSeasonDataSuccess(seasonData) {
+  return {
+    type: UPDATE_SEASON_DATA_SUCCESS,
+    seasonData,
   };
 }

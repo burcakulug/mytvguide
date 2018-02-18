@@ -29,13 +29,13 @@ const ShowsContainer = styled.div`
 
 export class Shows extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { list, details } = this.props.shows;
+    const { list, showData } = this.props.shows;
     return (
       <ShowsContainer>
         <h2><FormattedMessage {...messages.header} /></h2>
         <List>
           {list && list.map((id) => {
-            const name = get(find(details, { id }), 'name');
+            const name = get(find(showData, { show: { id } }), 'show.name');
             return (
               <ListItem key={id} onClick={() => this.props.getSeasons(id, name)}>
                 {id} - {name}

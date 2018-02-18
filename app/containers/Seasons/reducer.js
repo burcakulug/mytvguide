@@ -13,7 +13,7 @@ import {
 const initialState = fromJS({
   showId: null,
   showName: null,
-  details: [],
+  seasons: [],
 });
 
 function seasonsReducer(state = initialState, action) {
@@ -24,7 +24,7 @@ function seasonsReducer(state = initialState, action) {
         .set('showName', action.showName);
     case GET_SEASONS_SUCCESS:
       return state
-        .set('details', fromJS(action.details));
+        .set('seasons', fromJS(action.seasons));
     default:
       return state;
   }
