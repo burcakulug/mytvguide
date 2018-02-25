@@ -14,6 +14,8 @@
 - [Styled Components](https://github.com/styled-components/styled-components)
 - [React Boilerplate](https://github.com/react-boilerplate/react-boilerplate)
   - *The awesome boilerplate that sets all these up nicely*
+- [TV Maze](https://www.tvmaze.com/)
+  - *Provides the public RESTful API for TV Shows*
 - [Material UI](https://github.com/mui-org/material-ui)
 - [Formik](https://github.com/jaredpalmer/formik)
 - [Styled CSS Grid](https://github.com/azz/styled-css-grid)
