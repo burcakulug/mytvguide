@@ -13,6 +13,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Cell } from 'styled-css-grid';
 import { List, ListItem } from 'material-ui';
+import Subheader from 'material-ui/Subheader';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -22,6 +23,16 @@ import saga from './saga';
 import messages from './messages';
 
 export class MyShows extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = { show:'', season: '', seasons: [], episodes: [] };
+    this.selectSeasons = this.selectSeasons.bind(this);
+  }
+
+  selectSeasons(show, seasons) {
+    this.setState({ show, seasons });
+  }
+
   render() {
     const { showData } = this.props.myShows;
     return (
@@ -38,7 +49,7 @@ export class MyShows extends React.PureComponent { // eslint-disable-line react/
               {showData && showData.map((data) => {
                 console.log('data', data);
                 return (
-                  <ListItem key={data.show.id}>
+                  <ListItem key={data.show.id} onClick={() => this.selectSeasons(data.show.name, data.seasons)}>
                     {data.show.id} - {data.show.name}
                   </ListItem>);
               }
@@ -48,6 +59,14 @@ export class MyShows extends React.PureComponent { // eslint-disable-line react/
           </Cell>
           <Cell>
             <h3>Seasons</h3>
+            <List>
+              <Subheader>{this.state.show}</Subheader>
+              {this.state.seasons.map((data) => (
+                <ListItem key={data.season.id}>
+                  Season  {data.season.number}
+                </ListItem>
+              ))}
+            </List>
           </Cell>
           <Cell>
             <h3>Episodes</h3>
