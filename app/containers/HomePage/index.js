@@ -11,12 +11,9 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Grid, Cell } from 'styled-css-grid';
 import messages from './messages';
 
-import Shows from '../Shows';
-import Seasons from '../Seasons';
-import Episodes from '../Episodes';
+import MyShows from '../MyShows';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -25,11 +22,7 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
         <h1>
           <FormattedMessage {...messages.header} />
         </h1>
-        <Grid columns={3}>
-          <Cell><Shows /></Cell>
-          <Cell><Seasons /></Cell>
-          <Cell><Episodes /></Cell>
-        </Grid>
+        <MyShows />
       </div>
     );
   }

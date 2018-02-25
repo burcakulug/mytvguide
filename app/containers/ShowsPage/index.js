@@ -21,7 +21,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { searchShows } from './actions';
-import { addShow } from '../Shows/actions';
+import { addShow } from '../MyShows/actions';
 
 export class ShowsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
