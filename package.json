@@ -1,16 +1,16 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.5.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "mytvguide",
+  "version": "1.0.0",
+  "description": "My TV Guide - track your shows on your own terms",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "git://github.com/burcakulug/mytvguide.git"
   },
   "engines": {
     "npm": ">=3",
     "node": ">=5"
   },
-  "author": "Max Stoiber",
+  "author": "Burcak Ulug",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
