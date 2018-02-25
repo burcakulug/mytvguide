@@ -1,6 +1,6 @@
-# Contributing to react-boilerplate
+# Contributing to My TV Guide
 
-Love react-boilerplate and want to help? Thanks so much, there's something to do for everybody!
+Love My TV Guide and want to help? Thanks so much, there's something to do for everybody!
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
@@ -8,7 +8,7 @@ Following these guidelines helps to communicate that you respect the time of the
 
 ## Using the issue tracker
 
-The [issue tracker](https://github.com/react-boilerplate/react-boilerplate/issues) is
+The [issue tracker](https://github.com/burcakulug/mytvguide/issues) is
 the preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests).
 
@@ -69,10 +69,10 @@ project's developers might not want to merge into the project.
 Please adhere to the coding conventions used throughout a project (indentation,
 accurate comments, etc.) and any other requirements (such as test coverage).
 
-Since the `master` branch is what people actually use in production, we have a
+<!-- Since the `master` branch is what people actually use in production, we have a
 `dev` branch that unstable changes get merged into first. Only when we
 consider that stable we merge it into the `master` branch and release the
-changes for real.
+changes for real. -->
 
 Adhering to the following process is the best way to get your work
 included in the project:
@@ -81,21 +81,21 @@ included in the project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/react-boilerplate.git
+   git clone https://github.com/<your-username>/mytvguide.git
    # Navigate to the newly cloned directory
-   cd react-boilerplate
+   cd mytvguide
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/react-boilerplate/react-boilerplate.git
+   git remote add upstream https://github.com/burcakulug/mytvguide.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
 
    ```bash
-   git checkout dev
-   git pull upstream dev
+   git checkout master
+   git pull upstream master
    ```
 
-3. Create a new topic branch (off the `dev` branch) to contain your feature, change, or fix:
+3. Create a new topic branch (off the `master` branch) to contain your feature, change, or fix:
 
    ```bash
    git checkout -b <topic-branch-name>
@@ -103,10 +103,10 @@ included in the project:
 
 4. Commit your changes in logical chunks. Please adhere to these [git commit message guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) or your code is unlikely be merged into the main project. Use Git's [interactive rebase](https://help.github.com/articles/about-git-rebase/) feature to tidy up your commits before making them public.
 
-5. Locally merge (or rebase) the upstream dev branch into your topic branch:
+5. Locally merge (or rebase) the upstream master branch into your topic branch:
 
    ```bash
-   git pull [--rebase] upstream dev
+   git pull [--rebase] upstream master
    ```
 
 6. Push your topic branch up to your fork:
@@ -119,12 +119,12 @@ included in the project:
     with a clear title and description.
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project
-owners to license your work under the terms of the [MIT License](https://github.com/react-boilerplate/react-boilerplate/blob/master/LICENSE.md).
+owners to license your work under the terms of the [MIT License](https://github.com/burcakulug/mytvguide/blob/master/LICENSE.md).
 
 # Collaborating guidelines
 You can find the list of all maintainers in [MAINTAINERS.md](./MAINTAINERS.md).
 
-There are few basic rules to ensure high quality of the boilerplate:
+There are few basic rules to ensure high quality of the project:
 
  - Before merging, a PR requires at least two approvals from the collaborators unless it's an architectural change, a large feature, etc. If it is, then at least 50% of the core team have to agree to merge it, with every team member having a full veto right. (i.e. every single one can block any PR)
  - A PR should remain open for at least two days before merging (does not apply for trivial contributions like fixing a typo). This way everyone has enough time to look into it.
