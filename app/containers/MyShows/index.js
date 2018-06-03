@@ -25,12 +25,17 @@ import messages from './messages';
 export class MyShows extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.state = { show:'', season: '', seasons: [], episodes: [] };
+    this.state = { show: '', season: '', seasons: [], episodes: [] };
     this.selectSeasons = this.selectSeasons.bind(this);
+    this.selectEpisodes = this.selectEpisodes.bind(this);
   }
 
   selectSeasons(show, seasons) {
-    this.setState({ show, seasons });
+    this.setState({ show, seasons, season: '', episodes: [] });
+  }
+
+  selectEpisodes(season, episodes) {
+    this.setState({ season, episodes });
   }
 
   render() {
@@ -62,7 +67,7 @@ export class MyShows extends React.PureComponent { // eslint-disable-line react/
             <List>
               <Subheader>{this.state.show}</Subheader>
               {this.state.seasons.map((data) => (
-                <ListItem key={data.season.id}>
+                <ListItem key={data.season.id} onClick={() => this.selectEpisodes(data.season.number, data.episodes)}>
                   Season  {data.season.number}
                 </ListItem>
               ))}
@@ -70,6 +75,14 @@ export class MyShows extends React.PureComponent { // eslint-disable-line react/
           </Cell>
           <Cell>
             <h3>Episodes</h3>
+            <List>
+              <Subheader>{this.state.season && `Season ${this.state.season}`}</Subheader>
+              {this.state.episodes.map((data) => (
+                <ListItem key={data.id}>
+                  {data.name} - {data.name}
+                </ListItem>
+              ))}
+            </List>
           </Cell>
         </Grid>
       </div>

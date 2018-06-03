@@ -20,7 +20,7 @@ export function* getShowDetailsSaga() {
 
     const episodeData = yield all(seasonDataMap
       .map((showSeason) => showSeason.seasonData
-      .map(() => call(request, `http://api.tvmaze.com/seasons/${showSeason.showId}/episodes`))
+      .map((season) => call(request, `http://api.tvmaze.com/seasons/${season.id}/episodes`))
     ));
     console.log('episodeData', episodeData);
 
