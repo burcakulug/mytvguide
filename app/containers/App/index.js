@@ -19,6 +19,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import Context from 'containers/Context/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import UsersPage from 'containers/UsersPage/Loadable';
 import ShowsPage from 'containers/ShowsPage/Loadable';
@@ -44,14 +45,14 @@ export default function App() {
             <MenuItem primaryText="Shows" containerElement={<Link to="/shows" />} />
           </IconMenu>}
       />
-      <div style={{ margin: '20px' }}>
+      <Context style={{ margin: '20px' }}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/users" component={UsersPage} />
           <Route exact path="/shows" component={ShowsPage} />
           <Route component={NotFoundPage} />
         </Switch>
-      </div>
+      </Context>
     </div>
   );
 }

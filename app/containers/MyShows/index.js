@@ -22,7 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-export class MyShows extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class MyShows extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = { show: '', season: '', seasons: [], episodes: [] };

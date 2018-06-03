@@ -18,11 +18,13 @@ import Subheader from 'material-ui/Subheader';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectUsers, makeSelectSelectedUser } from './selectors';
+import { setUser } from 'containers/Context/actions';
+import makeSelectContext from 'containers/Context/selectors';
+import { makeSelectUsers } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { createUser, selectUser } from './actions';
+import { createUser } from './actions';
 
 export class UsersPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -64,7 +66,7 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
           <List>
             <Subheader>Current Users</Subheader>
             {this.props.users.map(({ name }) => (
-              <ListItem key={name} primaryText={`${name} - ${this.props.selectedUser === name}`} onClick={() => this.props.selectUser(name)} />))}
+              <ListItem key={name} primaryText={`${name} - ${this.props.context.user === name}`} onClick={() => this.props.selectUser(name)} />))}
           </List>
         </div>
       </div>
@@ -75,19 +77,20 @@ export class UsersPage extends React.PureComponent { // eslint-disable-line reac
 UsersPage.propTypes = {
   createUser: PropTypes.func.isRequired,
   selectUser: PropTypes.func.isRequired,
-  selectedUser: PropTypes.string,
+  context: PropTypes.object,
   users: PropTypes.arrayOf(PropTypes.string),
 };
 
 const mapStateToProps = createStructuredSelector({
   users: makeSelectUsers(),
-  selectedUser: makeSelectSelectedUser(),
+  // selectedUser: makeSelectSelectedUser(),
+  context: makeSelectContext(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     createUser: (name) => dispatch(createUser(name)),
-    selectUser: (name) => dispatch(selectUser(name)),
+    selectUser: (name) => dispatch(setUser(name)),
   };
 }
 

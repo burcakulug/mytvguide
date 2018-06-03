@@ -23,7 +23,7 @@ import messages from './messages';
 import { searchShows } from './actions';
 import { addShow } from '../MyShows/actions';
 
-export class ShowsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class ShowsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { searchResult } = this.props.showsPage;
     return (

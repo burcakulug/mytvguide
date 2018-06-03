@@ -15,7 +15,7 @@ import messages from './messages';
 
 import MyShows from '../MyShows';
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
