@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -16,6 +17,7 @@ import { TextField, RaisedButton, List, ListItem } from 'material-ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import makeSelectContext from 'containers/Context/selectors';
 import makeSelectShowsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -24,7 +26,15 @@ import { searchShows } from './actions';
 import { addShow } from '../MyShows/actions';
 
 export class ShowsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
+  constructor(props) {
+    super(props);
+    this.renderRedirect = this.renderRedirect.bind(this);
+    this.renderSearch = this.renderSearch.bind(this);
+  }
+  renderRedirect() {
+    return (<Redirect to="/users" />);
+  }
+  renderSearch() {
     const { searchResult } = this.props.showsPage;
     return (
       <div>
@@ -75,16 +85,26 @@ export class ShowsPage extends React.Component { // eslint-disable-line react/pr
       </div>
     );
   }
+
+  render() {
+    const { context } = this.props;
+    if (context && context.user) {
+      return this.renderSearch();
+    }
+    return this.renderRedirect();
+  }
 }
 
 ShowsPage.propTypes = {
   searchShows: PropTypes.func.isRequired,
   addShow: PropTypes.func.isRequired,
   showsPage: PropTypes.object,
+  context: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   showsPage: makeSelectShowsPage(),
+  context: makeSelectContext(),
 });
 
 function mapDispatchToProps(dispatch) {
