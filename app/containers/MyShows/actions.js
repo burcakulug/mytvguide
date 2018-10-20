@@ -10,9 +10,10 @@
    UPDATE_SEASON_DATA_SUCCESS,
  } from './constants';
 
- export function addShow(id) {
+ export function addShow(user, id) {
    return {
      type: ADD_SHOW,
+     user,
      id,
    };
  }

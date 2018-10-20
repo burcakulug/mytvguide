@@ -17,6 +17,7 @@ import Subheader from 'material-ui/Subheader';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import makeSelectContext from 'containers/Context/selectors';
 import makeSelectMyShows from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -96,6 +97,7 @@ MyShows.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   myShows: makeSelectMyShows(),
+  context: makeSelectContext(),
 });
 
 function mapDispatchToProps(dispatch) {

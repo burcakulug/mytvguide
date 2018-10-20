@@ -34,7 +34,7 @@ export class ShowsPage extends React.Component { // eslint-disable-line react/pr
   renderRedirect() {
     return (<Redirect to="/users" />);
   }
-  renderSearch() {
+  renderSearch(user) {
     const { searchResult } = this.props.showsPage;
     return (
       <div>
@@ -75,7 +75,7 @@ export class ShowsPage extends React.Component { // eslint-disable-line react/pr
           {searchResult &&
             (<List>
               {searchResult.map((item) => (
-                <ListItem key={item.show.id} onClick={() => this.props.addShow(item.show.id)}>
+                <ListItem key={item.show.id} onClick={() => this.props.addShow(user, item.show.id)}>
                   {`${item.show.name} (${(item.show.network && item.show.network.name) || 'N/A'})`}
                 </ListItem>
               ))}
@@ -89,7 +89,7 @@ export class ShowsPage extends React.Component { // eslint-disable-line react/pr
   render() {
     const { context } = this.props;
     if (context && context.user) {
-      return this.renderSearch();
+      return this.renderSearch(context.user);
     }
     return this.renderRedirect();
   }
@@ -110,7 +110,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     searchShows: (q) => dispatch(searchShows(q)),
-    addShow: (id) => dispatch(addShow(id)),
+    addShow: (user, id) => dispatch(addShow(user, id)),
   };
 }
 

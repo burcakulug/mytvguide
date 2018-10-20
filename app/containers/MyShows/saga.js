@@ -1,12 +1,15 @@
 import { take, call, put, select, all } from 'redux-saga/effects';
 
-import request from '../../utils/request';
+import request from 'utils/request';
+import makeSelectContext from 'containers/Context/selectors';
 import makeSelectShows from './selectors';
 import { updateShowDataSuccess, updateSeasonDataSuccess } from './actions';
 
 export function* getShowDetailsSaga() {
   try {
-    const { list } = yield select(makeSelectShows());
+    const { user } = yield select(makeSelectContext());
+    const { users } = yield select(makeSelectShows());
+    const list = users[user].list;
     const showData = yield all(list.map((id) => call(request, `http://api.tvmaze.com/shows/${id}`)));
     console.log('showData', showData);
     // yield put(updateShowDataSuccess(showData));
