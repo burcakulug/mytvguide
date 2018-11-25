@@ -22,21 +22,75 @@ import makeSelectMyShows from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { addWatchedEpisode, removeWatchedEpisode } from './actions';
 
-export class MyShows extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class MyShows extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: '', season: '', seasons: [], episodes: [] };
+    this.state = { show: { id: '', name: '' }, season: '', seasons: [], episodes: [] };
     this.selectSeasons = this.selectSeasons.bind(this);
     this.selectEpisodes = this.selectEpisodes.bind(this);
+    this.isEpisodeWatched = this.isEpisodeWatched.bind(this);
+    this.renderUnwatchedEpisodesLabel = this.renderUnwatchedEpisodesLabel.bind(this);
+    this.renderUnwatchedEpisodesInShowLabel = this.renderUnwatchedEpisodesInShowLabel.bind(this);
+    this.renderUnwatchedEpisodesInSeasonLabel = this.renderUnwatchedEpisodesInSeasonLabel.bind(this);
   }
 
-  selectSeasons(show, seasons) {
-    this.setState({ show, seasons, season: '', episodes: [] });
+  selectSeasons(id, name, seasons) {
+    this.setState({ show: { id, name }, seasons, season: '', episodes: [] });
   }
 
   selectEpisodes(season, episodes) {
     this.setState({ season, episodes });
+  }
+
+  toggleEpisodeWatched(episodeId) {
+    if (this.isEpisodeWatched(episodeId)) {
+      this.props.dispatch(removeWatchedEpisode(episodeId));
+    } else {
+      this.props.dispatch(addWatchedEpisode(episodeId));
+    }
+  }
+
+  isEpisodeWatched(episodeId) {
+    return this.props.myShows.watchedEpisodes.includes(episodeId);
+  }
+
+  countUnwatchedEpisodesInShow(showId) {
+    const { showData } = this.props.myShows;
+    const show = showData.find(({ show: { id } }) => id === showId);
+    let count = 0;
+    if (show) {
+      show.seasons.forEach((season) => season.episodes.filter(({ id }) => !this.isEpisodeWatched(id)).forEach(() => count += 1));
+    }
+    return count;
+  }
+
+  countUnwatchedEpisodesInSeason(showId, seasonId) {
+    const { showData } = this.props.myShows;
+    const show = showData.find(({ show: { id } }) => id === showId);
+    let count = 0;
+    if (show) {
+      const season = show.seasons.find(({ season : { id } }) => id === seasonId);
+      if (season) {
+        season.episodes.filter(({ id }) => !this.isEpisodeWatched(id)).forEach(() => count += 1);
+      }
+    }
+    return count;
+  }
+
+  renderUnwatchedEpisodesInShowLabel(showId) {
+    const count = this.countUnwatchedEpisodesInShow(showId);
+    return this.renderUnwatchedEpisodesLabel(count);
+  }
+
+  renderUnwatchedEpisodesInSeasonLabel(showId, seasonId) {
+    const count = this.countUnwatchedEpisodesInSeason(showId, seasonId);
+    return this.renderUnwatchedEpisodesLabel(count);
+  }
+
+  renderUnwatchedEpisodesLabel(count) {
+    return count ? (<strong>({count})</strong>) : '';
   }
 
   render() {
@@ -55,8 +109,8 @@ export class MyShows extends React.Component { // eslint-disable-line react/pref
               {showData && showData.map((data) => {
                 console.log('data', data);
                 return (
-                  <ListItem key={data.show.id} onClick={() => this.selectSeasons(data.show.name, data.seasons)}>
-                    {data.show.id} - {data.show.name}
+                  <ListItem key={data.show.id} onClick={() => this.selectSeasons(data.show.id, data.show.name, data.seasons)}>
+                    {data.show.id} - {data.show.name} {this.renderUnwatchedEpisodesInShowLabel(data.show.id)}
                   </ListItem>);
               }
               )
@@ -66,10 +120,10 @@ export class MyShows extends React.Component { // eslint-disable-line react/pref
           <Cell>
             <h3>Seasons</h3>
             <List>
-              <Subheader>{this.state.show}</Subheader>
+              <Subheader>{this.state.show.name}</Subheader>
               {this.state.seasons.map((data) => (
                 <ListItem key={data.season.id} onClick={() => this.selectEpisodes(data.season.number, data.episodes)}>
-                  Season  {data.season.number}
+                  Season  {data.season.number} {this.renderUnwatchedEpisodesInSeasonLabel(this.state.show.id, data.season.id)}
                 </ListItem>
               ))}
             </List>
@@ -79,8 +133,8 @@ export class MyShows extends React.Component { // eslint-disable-line react/pref
             <List>
               <Subheader>{this.state.season && `Season ${this.state.season}`}</Subheader>
               {this.state.episodes.map((data) => (
-                <ListItem key={data.id}>
-                  {data.name} - {data.name}
+                <ListItem key={data.id} onClick={() => this.toggleEpisodeWatched(data.id)}>
+                  {data.name} - {data.name} {this.isEpisodeWatched(data.id) ? (<strong>(watched)</strong>) : ''}
                 </ListItem>
               ))}
             </List>

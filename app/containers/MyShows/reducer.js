@@ -9,6 +9,8 @@ import {
   ADD_SHOW,
   UPDATE_SHOW_DATA_SUCCESS,
   UPDATE_SEASON_DATA_SUCCESS,
+  ADD_WATCHED_EPISODE,
+  REMOVE_WATCHED_EPISODE,
 } from './constants';
 
 const initialState = fromJS({
@@ -16,6 +18,7 @@ const initialState = fromJS({
   showData: [],
   seasonData: {},
   episodeData: [],
+  watchedEpisodes: [],
 });
 
 function myShowsReducer(state = initialState, action) {
@@ -31,6 +34,10 @@ function myShowsReducer(state = initialState, action) {
       return state.set('showData', fromJS(action.showData));
     case UPDATE_SEASON_DATA_SUCCESS:
       return state.set('seasonData', fromJS(action.seasonData));
+    case ADD_WATCHED_EPISODE:
+      return state.update('watchedEpisodes', (watchedEpisodes) => watchedEpisodes.push(action.episodeId));
+    case REMOVE_WATCHED_EPISODE:
+      return state.update('watchedEpisodes', (watchedEpisodes) => watchedEpisodes.filter((item) => item !== action.episodeId));
     default:
       return state;
   }
